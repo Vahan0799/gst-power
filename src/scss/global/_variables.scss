@@ -1,0 +1,80 @@
+// theme breakpoint
+$media-break-points: (
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1200px,
+	xxl: 1440px,
+) !default;
+
+$white: #fff !default;
+$black: #000 !default;
+
+// Main Colors
+$blue-600: rgb(18, 41, 52) !default;
+$red-500: rgb(242, 72, 65) !default;
+$white-200: #f9f9f9 !default;
+
+// Gray
+$gray-800: #2C2D32 !default;
+
+$primary: $blue-600;
+$secondary: $red-500;
+$tertiary: $white-200;
+
+$bodyText: $black;
+
+$border-primary: 1px solid $primary;
+$outline-primary: 1px solid $primary;
+
+//only colors
+$colors: (
+	'primary': $primary,
+	'secondary': $secondary,
+	'tertiary': $tertiary,
+	'white': $white,
+	'black': $black,
+) !default;
+
+$font-family-primary: 'Titillium Web', sans-serif !default;
+$font-family-secondary: 'Inter', sans-serif !default;
+
+$body-font: $font-family-primary;
+
+$base-font-size: 16px;
+$base-font-size-m: 14px;
+$base-line-height: normal;
+$base-letter-spacing: normal;
+
+$base-radius: 4px;
+
+$extra-large-font: 160px !default;
+$extra-large-font-m: 72px !default;
+$h1-font-size: 65px !default;
+$h1-font-size-m: 42px !default;
+$h2-font-size: 52px !default;
+$h2-font-size-m: 26px !default;
+$h3-font-size: 45px !default;
+$h3-font-size-m: 32px !default;
+$h4-font-size: 20px !default;
+
+//space
+$space: (
+	'0': 0,
+	'1': 4px,
+	'2': 8px,
+	'3': 12px,
+	'4': 16px,
+	'5': 20px,
+	'6': 24px,
+	'7': 28px,
+	'8': 32px,
+	'9': 36px,
+	'10': 40px,
+	'11': 44px,
+	'12': 48px,
+	'13': 52px,
+	'14': 56px,
+	'15': 60px,
+) !default;

@@ -1,0 +1,109 @@
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 120px;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    transition: opacity 1.2s linear;
+
+    &.loading {
+        opacity: 0;
+    }
+}
+
+.object-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+// Stroke Text
+span {
+    display: inline-block;
+    color: inherit;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 2px;
+
+    @include media-breakpoint-down(lg) {
+        letter-spacing: 1.2px;
+    }
+}
+
+.dark-layer {
+    position: relative;
+
+    &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba($black, 0.4);
+    }
+}
+
+.text-title-stroke {
+    position: relative;
+    padding-left: 25px;
+
+    @include media-breakpoint-up(lg) {
+        padding-left: 45px;
+    }
+
+    &::before {
+        content: '';
+        width: 2px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $red-500;
+
+        @include media-breakpoint-up(lg) {
+            width: 4px;
+            left: -1px;
+        }
+    }
+}
+
+// Extends
+%full-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+%align-center {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+%justify-center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+%btn-reset {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+%input-reset {
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+}
+
+%textarea-reset {
+    border: none;
+    background-color: transparent;
+    resize: none;
+}

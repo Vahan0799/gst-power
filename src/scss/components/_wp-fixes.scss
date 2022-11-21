@@ -1,0 +1,17 @@
+//WP Form loading fix
+.wpcf7 {
+    form p {
+	position: relative !important;
+
+	.wpcf7-spinner {
+	    position: absolute !important;
+	    bottom: 4% !important;
+	    left: 120px !important;
+	    width: 24px !important;
+
+	    &::before {
+		background-color: $secondary !important;
+	    }
+	}
+    }
+}

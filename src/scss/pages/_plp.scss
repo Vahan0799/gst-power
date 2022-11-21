@@ -1,0 +1,273 @@
+// PLP & Spare Parts
+.plp {
+    $plp: #{&};
+
+    & > .banner {
+        margin-bottom: 30px;
+
+        @include media-breakpoint-up(lg) {
+            margin-bottom: 100px;
+        }
+    }
+
+    &__container {
+        display: grid;
+        padding: 0 25px 80px;
+
+        @include media-breakpoint-up(lg) {
+            padding: 0 30px 100px;
+            grid-template-columns: 20% 75%;
+            grid-gap: 5%;
+        }
+
+        @include media-breakpoint-down(lg) {
+            position: relative;
+        }
+    }
+
+    &__filters {
+        @include media-breakpoint-down(lg) {
+            width: 100%;
+            min-height: 100vh;
+            padding: 0 25px;
+            position: absolute;
+            z-index: 2;
+            background-color: $white;
+            display: none;
+        }
+
+        @include media-breakpoint-up(lg) {
+            padding-top: 50px;
+        }
+
+        & > div:not(:last-of-type) {
+            margin-bottom: 75px;
+        }
+
+        h4 {
+            font-size: 20px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid $black;
+        }
+
+        &--close {
+            width: 12px;
+            margin-bottom: 20px;
+
+            @include media-breakpoint-up(lg) {
+                display: none;
+            }
+
+            & > img {
+                transform: rotate(90deg);
+            }
+        }
+
+        &--container {
+            padding-top: 30px;
+
+            @include media-breakpoint-up(lg) {
+                padding-top: 40px;
+            }
+        }
+
+        #{$plp}__filter {
+            margin-bottom: 50px;
+
+            &--open {
+                #{$plp}__filter {
+                    &--btn {
+                        &::before {
+                            opacity: 0;
+                        }
+
+                        &::after {
+                            transform: rotate(0);
+                        }
+                    }
+                }
+            }
+
+            &--head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                cursor: pointer;
+            }
+
+            &--btn {
+                @extend %btn-reset;
+                position: relative;
+                width: 15px;
+
+                &::before, &::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    background-color: $black;
+                    width: 100%;
+                    height: 1px;
+                    transition: .5s ease;
+                }
+
+                &::after {
+                    transform: rotate(90deg);
+                }
+            }
+
+            &--body {
+                padding-top: 25px;
+                height: 168px;
+                overflow: auto;
+
+                @include media-breakpoint-down(lg) {
+                    display: none;
+                }
+
+                &::-webkit-scrollbar {
+                    width: 4px;
+
+                    &-thumb {
+                        background-color: $primary;
+                        border-radius: 6px;
+                    }
+
+                    &-track {
+                        background-color: rgba($black, 0.2);
+                        border-radius: 6px;
+                    }
+                }
+
+                a {
+                    display: block;
+                    font-weight: 600;
+                    transition: .3s ease;
+
+                    &:hover {
+                        color: $primary;
+                    }
+
+                    &:not(:last-of-type) {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    &__products {
+        &--head {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+
+            h3 {
+                font-size: 36px;
+
+                @include media-breakpoint-down(lg) {
+                    font-size: 25px;
+                }
+
+                a {
+                    display: inline-block;
+                    font-size: 36px;
+
+                    @include media-breakpoint-down(lg) {
+                        font-size: 25px;
+                    }
+
+                    &:not(:first-of-type) {
+                        position: relative;
+                        padding-left: 5px;
+
+                        &::before {
+                            content: '/';
+                            position: absolute;
+                            top: 2px;
+                            left: -7px;
+                        }
+                    }
+                }
+            }
+
+            #{$plp}__filter--mob {
+                display: flex;
+                align-items: center;
+
+                @include media-breakpoint-up(lg) {
+                    display: none;
+                }
+
+                img {
+                    width: 10px;
+                    margin-left: 5px;
+                    transition: .5s ease;
+                }
+            }
+        }
+
+        &--container {
+            display: grid;
+            grid-gap: 50px;
+
+            @include media-breakpoint-up(lg) {
+                grid-template-columns: repeat(2, 1fr);
+                margin-bottom: 20px;
+            }
+        }
+
+        #{$plp}__product {
+            &:hover {
+                picture {
+                    @include media-breakpoint-up(lg) {
+                        &::after {
+                            background-color: rgba($black, 0);
+                        }
+                    }
+
+                    img {
+                        transform: scale(1.1);
+                    }
+                }
+            }
+
+            picture {
+                margin-bottom: 10px;
+                overflow: hidden;
+
+                @include media-breakpoint-up(lg) {
+                    position: relative;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        top: 0;
+                        left: 0;
+                        background-color: rgba($black, 0.4);
+                        transition: 1.2s ease;
+                    }
+                }
+
+                img {
+                    transition: 1.2s ease;
+
+                    @include media-breakpoint-up(lg) {
+                        max-height: 413px;
+                        height: 100%;
+                    }
+                }
+            }
+
+            h4 {
+                font-size: 20px;
+
+                @include media-breakpoint-up(lg) {
+                    font-size: 28px;
+                }
+            }
+        }
+    }
+}

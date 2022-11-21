@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head }}
+</head>
+<body>
+    <main>
+        <!-- Main -->
+        <div class="page-content fade-on-load">
+            <!-- Header -->
+            {{#unlesspage '404'}}
+                {{> header }}
+            {{/unlesspage}}
+
+            {{> body }}
+
+            <!-- footer -->
+            {{#unlesspage '404'}}
+                {{> footer }}
+            {{/unlesspage}}
+        </div>
+    </main>
+    <!-- JS -->
+    <script src="./assets/js/main.bundle.js" defer></script>
+    <script src="./assets/js/vendors.bundle.js" defer></script>
+    <script src="./assets/js/runtime.bundle.js" defer></script>
+</body>
+</html>

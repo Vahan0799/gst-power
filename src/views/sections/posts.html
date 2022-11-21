@@ -1,0 +1,13 @@
+<!--Begin Posts-->
+<section class="posts">
+    <div class="posts__inner">
+        {{#each articles.HomePosts}}
+            {{> article
+                ArticleImage=this.imageUrl
+                ArticleTitle=this.title
+                ArticleSubtitle=this.subTitle
+            }}
+        {{/each}}
+    </div>
+</section>
+<!--./End Posts-->
