@@ -1,8 +1,8 @@
 # Gst Power Mono Repo
 
-<a href="gstpower.am" target="_blank">
+<a href="https://gst-power.vercel.app/" target="_blank">
   <p align="left">
-      <img src="./src/assets/images/svgs/sidebar-logo.svg" alt="Build Status" width="50"> </p>
+      <img src="./src/assets/images/svgs/sidebar-logo.svg" alt="Build Status" width="50">
       <img src="./src/assets/images/hero-preview.png" alt="Preview">
   </p>
 </a>
