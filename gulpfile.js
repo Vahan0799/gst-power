@@ -1,14 +1,13 @@
 'use strict';
 
-const {src, dest} = require('gulp');
+const { src, dest } = require('gulp');
 const gulp = require('gulp');
 const autoprefixer = require('gulp-autoprefixer');
 const cssbeautify = require('gulp-cssbeautify');
 const removeComments = require('gulp-strip-css-comments');
 const rename = require('gulp-rename');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const cssnano = require('gulp-cssnano');
-const uglify = require('gulp-uglify');
 const plumber = require('gulp-plumber');
 const panini = require('panini');
 const imagemin = require('gulp-imagemin');
@@ -23,7 +22,7 @@ const browserSync = require('browser-sync').create();
 /* Paths */
 const srcPath = 'src/';
 const distPath = 'build/';
-// const externalPath = 'gst-power/assets/';
+const extraPath = 'shopify/assets/';
 
 const config = {
 	shape: {
@@ -42,6 +41,7 @@ const config = {
 		symbol: true, // Activate the «symbol» mode
 	},
 };
+
 const path = {
 	build: {
 		html: distPath,
@@ -71,38 +71,39 @@ const path = {
 };
 
 /* Tasks */
-
 function serve() {
 	browserSync.init({
 		server: {
 			baseDir: './' + distPath,
 		},
+		port: 3008,
+		ui: false
 	});
 }
 
 function html(cb) {
 	const rootHtml = srcPath + 'views/';
 	panini.refresh();
-	return src(path.src.html, {base: rootHtml})
+	return src(path.src.html, { base: rootHtml })
 		.pipe(plumber())
 		.pipe(
 			panini({
 				root: rootHtml,
 				layouts: rootHtml + 'layouts/',
-				partials: [rootHtml + 'partials/', rootHtml + 'sections'],
+				partials:[rootHtml + 'partials/', rootHtml + 'sections'],
 				helpers: rootHtml + 'helpers/',
 				data: rootHtml + 'data/',
 			})
 		)
 		.pipe(dest(path.build.html))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(browserSync.reload({ stream: true }));
 
 	cb();
 }
 
 function css(cb) {
 	return (
-		src(path.src.css, {base: srcPath + 'assets/scss/'})
+		src(path.src.css, { base: srcPath + 'assets/scss/' })
 			.pipe(
 				plumber({
 					errorHandler: function (err) {
@@ -138,14 +139,14 @@ function css(cb) {
 			.pipe(rename('custom.min.css'))
 			.pipe(dest(path.build.css))
 			// .pipe(dest(extraPath))
-			.pipe(browserSync.reload({stream: true}))
+			.pipe(browserSync.reload({ stream: true }))
 	);
 
 	cb();
 }
 
 function cssWatch(cb) {
-	return src(path.src.css, {base: srcPath + 'assets/scss/'})
+	return src(path.src.css, { base: srcPath + 'assets/scss/' })
 		.pipe(sourcemaps.init())
 		.pipe(
 			plumber({
@@ -167,13 +168,13 @@ function cssWatch(cb) {
 		.pipe(rename('custom.min.css'))
 		// .pipe(dest(extraPath))
 		.pipe(dest(path.build.css))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(browserSync.reload({ stream: true }));
 
 	cb();
 }
 
 function js(cb) {
-	return src(path.src.js, {base: srcPath + 'js/'})
+	return src(path.src.js, { base: srcPath + 'assets/js/' })
 		.pipe(
 			plumber({
 				errorHandler: function (err) {
@@ -185,16 +186,40 @@ function js(cb) {
 				},
 			})
 		)
-		.pipe(webpackStream(require('./webpack.config.js')))
+		.pipe(
+			webpackStream({
+				mode: 'production',
+				output: {
+					filename: 'custom.min.js',
+				},
+				performance: {
+					hints: false,
+					maxEntrypointSize: 2000,
+					maxAssetSize: 2000
+				},
+				module: {
+					rules: [
+						{
+							test: /\.(js)$/,
+							exclude: /(node_modules)/,
+							loader: 'babel-loader',
+							query: {
+								presets: ['@babel/preset-env'],
+							},
+						},
+					],
+				},
+			})
+		)
 		// .pipe(dest(extraPath))
 		.pipe(dest(path.build.js))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(browserSync.reload({ stream: true }));
 
 	cb();
 }
 
 function jsWatch(cb) {
-	return src(path.src.js, {base: srcPath + 'js/'})
+	return src(path.src.js, { base: srcPath + 'assets/js/' })
 		.pipe(
 			plumber({
 				errorHandler: function (err) {
@@ -207,11 +232,21 @@ function jsWatch(cb) {
 			})
 		)
 		.pipe(
-			webpackStream(require('./webpack.config.js'))
+			webpackStream({
+				mode: 'development',
+				output: {
+					filename: 'custom.min.js',
+				},
+				performance: {
+					hints: false,
+					maxEntrypointSize: 2000,
+					maxAssetSize: 2000
+				}
+			})
 		)
 		// .pipe(dest(extraPath))
 		.pipe(dest(path.build.js))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(browserSync.reload({ stream: true }));
 
 	cb();
 }
@@ -220,36 +255,37 @@ function images(cb) {
 	return src(path.src.images)
 		.pipe(
 			imagemin([
-				imagemin.gifsicle({interlaced: true}),
-				imagemin.mozjpeg({quality: 80, progressive: true}),
-				imagemin.optipng({optimizationLevel: 5}),
+				imagemin.gifsicle({ interlaced: true }),
+				imagemin.mozjpeg({ quality: 80, progressive: true }),
+				imagemin.optipng({ optimizationLevel: 5 }),
 				imagemin.svgo({
-					plugins: [{removeViewBox: true}, {cleanupIDs: false}],
+					plugins: [{ removeViewBox: true }, { cleanupIDs: false }],
 				}),
 			])
 		)
 		.pipe(dest(path.build.images))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(browserSync.reload({ stream: true }));
 
 	cb();
 }
 
 function fonts(cb) {
 	return src(path.src.fonts)
-		// .pipe(dest(externalPath))
+		// .pipe(dest(extraPath))
 		.pipe(dest(path.build.fonts))
-		.pipe(browserSync.reload({stream: true}));
+		.pipe(browserSync.reload({ stream: true }));
 
 	cb();
 }
 
 function clean(cb) {
 	return del(path.clean);
+
 	cb();
 }
 
 function buildSvg(cb) {
-	return gulp.src(path.src.svgs, {cwd: path.build}).pipe(svgSprite(config)).pipe(gulp.dest(path.build.svgs));
+	return gulp.src(path.src.svgs, { cwd: path.build }).pipe(svgSprite(config)).pipe(gulp.dest(path.build.svgs));
 	cb();
 }
 
@@ -257,24 +293,17 @@ function copyShapes(cb) {
 	return gulp.src('src/assets/static-svgs/**/*').pipe(gulp.dest('./build/assets/static-svgs/'));
 }
 
-function copyViewSVG() {
-	return gulp.src('./build/assets/svgs/symbol/svg/sprite.symbol.svg', {allowEmpty: true})
-		.pipe(rename('spritesvg.html'))
-		.pipe(gulp.dest('./src/views/partials/'))
-}
-
 function watchFiles() {
 	gulp.watch([path.watch.html], html);
 	gulp.watch([path.watch.css], cssWatch);
 	gulp.watch([path.watch.js], jsWatch);
 	gulp.watch([path.watch.images], images);
-	gulp.watch([path.watch.svgs], gulp.series(buildSvg, copyViewSVG));
 	gulp.watch('src/assets/static-svgs', copyShapes);
 	gulp.watch([path.watch.fonts], fonts);
 }
 
-const build = gulp.series(clean, gulp.parallel(buildSvg, copyShapes, copyViewSVG, html, css, js, images, fonts));
-const watch = gulp.parallel(buildSvg, copyShapes, copyViewSVG, html, css, js, images, fonts, watchFiles, serve);
+const build = gulp.series(clean, gulp.parallel(html, css, js, images, fonts, copyShapes));
+const watch = gulp.parallel(html, css, js, images, fonts, buildSvg, copyShapes, watchFiles, serve);
 
 /* Exports Tasks */
 exports.html = html;
