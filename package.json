@@ -4,8 +4,8 @@
     "description": "GST Power",
     "author": "Vahan <vahanbio@gmail.com>",
     "scripts": {
-        "watch": "gulp",
-        "build": "gulp build"
+        "watch": "gulp --openssl-legacy-provider",
+        "build": "gulp build --openssl-legacy-provider"
     },
     "dependencies": {
         "gsap": "^3.10.4",
