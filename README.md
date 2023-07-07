@@ -21,7 +21,7 @@ In the project directory, you can run:
 
 ### `yarn watch` / `npm run watch`
 
-Runs the app for production to the `build` folder.\
+Runs the app for development to the `build` folder.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
