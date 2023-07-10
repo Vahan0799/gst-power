@@ -7,7 +7,7 @@
   </p>
 </a>
 
-## ***Build With***
+## ***Built With***
 <p align="left">
     <img src="./src/assets/svg/html-icon.svg" alt="HTML" width="80"> &emsp; &emsp;
     <img src="./src/assets/svg/sass-icon.svg" alt="SASS" width="120"> &emsp; &emsp;
